@@ -39,12 +39,12 @@ export function signin(req: express.Request , res: express.Response){
 
         // throw err
 
-        const token = jwt.sign(userObject , jwtSecretKey)
+        const token = jwt.sign({id: userObject._id} , jwtSecretKey , {expiresIn: 604800})
 
         try{
             const verified = jwt.verify(token , jwtSecretKey)
 
-            verified ? res.json({message: "jwt verified"}) : res.json({message: "jwt unverified"})
+            verified ? res.json({token}) : res.json({message: "Unverified"})
             console.log(token)
         }
         

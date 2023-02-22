@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import Signin from './Signin'
+import Signup from './Signup'
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
   const [classname , setClass] = useState<any>("")
 
   useEffect(() => {
-    getData()
+   getData()
   },[])
 
   const getData = () => {
@@ -203,6 +204,7 @@ function App() {
         }
       </div>
 
+      {/* <Signin /> */}
 
     </div>
   )

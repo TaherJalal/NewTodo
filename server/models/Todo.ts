@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import {User} from '../models/User'
 
 const todoSchema = new mongoose.Schema({
     task:{
@@ -16,11 +17,11 @@ const todoSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    // createdBy : {
-    //     type: Schema.Types.ObjectId,
-    //     ref :"_id",
-    //     required: true
-    // }
+    createdBy : {
+        type: Schema.Types.ObjectId,
+        ref :"User",
+        required: true
+    }
 } , {timestamps: true})
 
 export const Todo = mongoose.model('Todo' , todoSchema)
