@@ -37,6 +37,8 @@ export function signin(req: express.Request , res: express.Response){
 
         let jwtSecretKey = process.env.SECRET_KEY || "HELLOWORLD"
 
+        // throw err
+
         const token = jwt.sign(userObject , jwtSecretKey)
 
         try{

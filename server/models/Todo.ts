@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const todoSchema = new mongoose.Schema({
     task:{
@@ -12,15 +12,15 @@ const todoSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    priority:{
-        type: String,
-        required: true,
-        default: "low"
-    },
     archived: {
         type: Boolean,
         default: false
-    }
-})
+    },
+    // createdBy : {
+    //     type: Schema.Types.ObjectId,
+    //     ref :"_id",
+    //     required: true
+    // }
+} , {timestamps: true})
 
 export const Todo = mongoose.model('Todo' , todoSchema)

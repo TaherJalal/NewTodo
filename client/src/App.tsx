@@ -1,22 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import Signin from './Signin'
 
 function App() {
 
   const [todo , setTodo] = useState<any>([])
-  const [todoId , setTodoId] = useState<any>("")
-
   const [task , setTask] = useState('')
   const [description , setDescription] = useState('')
-  const [status , setStatus] = useState('')
-  const [priority , setPriority] = useState('')
   const [archive , setArchive] = useState<any>(false)
-
-  const [test , setTest] = useState<any>("")
+  const [classname , setClass] = useState<any>("")
 
   useEffect(() => {
     getData()
-    console.log(todoId)
   },[])
 
   const getData = () => {
@@ -35,32 +30,70 @@ function App() {
     axios.post('http://localhost:8000/todo' , {
       task,
       description,
-      priority,
       archive
     })
   }
 
-  const archived = () => {
-    let url = `http://localhost:8000/todo?_id=${todoId}`
-    console.log(url)
-    axios.put(url, {
-      archive: "true"
-    })
+  const archived = (todoId:String) => {
+    axios.put(`http://localhost:8000/todo?_id=${todoId}`,{
+      archived: true
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
-  const finishedTask = () => {
-    let url = `http://localhost:8000/todo?_id=${todoId}`
-    console.log(url)
-    axios.put(url,{
-    status: true
-    })
-    .then((res) => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  const unarchived = (todoId:String) => {
+    axios.put(`http://localhost:8000/todo?_id=${todoId}`,{
+      archived: false
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
+
+  const finishedTask = (todoId:String) => {
+    axios.put(`http://localhost:8000/todo?_id=${todoId}`,{
+      status: true
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  const unfinishedTask = (todoId:String) => {
+    axios.put(`http://localhost:8000/todo?_id=${todoId}`,{
+      status: false
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+
+  const deleteTodo = (todoId:String) => {
+      axios.delete(`http://localhost:8000/todo?_id=${todoId}`)
+      .then((res) => {
+        console.log(`http://localhost:8000/todo?_id=${todoId}`)
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
 
   return (
     <div>
@@ -80,11 +113,6 @@ function App() {
             <input type="text" name="description" onChange={(e) => setDescription(e.target.value)}/>
           </div>
 
-
-          <div>
-            <label>Priority</label>
-            <input type="text" name='priority' onChange={(e) => setPriority(e.target.value)}/>
-          </div>
 
           <button onClick={() => postData()}>Add Task</button>
 
@@ -118,15 +146,18 @@ function App() {
               <p>{data.status.toString()}</p>
           </div>
 
-          <div>
-              <h3>Priority:</h3>
-              <p>{data.priority}</p>
-          </div> 
 
-              {/* {setTodoId(data._id)} */}
+          <div>
+              <h3>Created At:</h3>
+              <p>{data.createdAt}</p>
+          </div>
+
+             
           <input type="hidden" name="_id" value={data._id} />
-          <button onClick={() => archived()}>Archive</button>
-          <button onClick={() => finishedTask()}>Done</button>
+          <button onClick={() => archived(data._id)}>Archive</button>
+          <button onClick={() => finishedTask(data._id)}>Done</button>
+          <button onClick={() => deleteTodo(data._id)}>Delete</button>
+
           
           </div>
           </form>
@@ -152,16 +183,13 @@ function App() {
               <p>{data.status.toString()}</p>
           </div>
 
-          <div>
-              <h3>Priority:</h3>
-              <p>{data.priority}</p>
-          </div> 
-
-            {/* {setTodoId(data._id)} */}
+           
           <input type="hidden" name="_id" id="" value={data._id}/>
 
-          <button onClick={() => archived()}>Archive</button>
-          <button onClick={() => finishedTask()}>Done</button>
+          <button onClick={() => unarchived(data._id)}>UnArchive</button>
+          <button onClick={() => unfinishedTask(data._id)}>UnDone</button>
+          <button onClick={() => deleteTodo(data._id)}>Delete</button>
+
             </div>
 
             

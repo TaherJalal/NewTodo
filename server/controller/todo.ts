@@ -1,8 +1,9 @@
 import express from 'express'
 import {Todo} from '../models/Todo'
 
+
 export function todo_get(req: express.Request ,res: express.Response){
-    Todo.find()
+    Todo.find().sort({createdAt : "asc"})
     .then(todo => {
         res.json({todo})
     })
@@ -12,6 +13,8 @@ export function todo_get(req: express.Request ,res: express.Response){
 }
 
 export function todo_post(req: express.Request , res: express.Response){
+
+
     let todo = new Todo(req.body)
     console.log(req.body)
 
@@ -25,7 +28,7 @@ export function todo_post(req: express.Request , res: express.Response){
 }
 
 export function todo_edit(req: express.Request , res: express.Response){
-    Todo.findByIdAndUpdate(req.body._id , req.body)
+    Todo.findByIdAndUpdate(req.query._id , req.body)
     .then(todo => {
         res.json({todo})
     })
