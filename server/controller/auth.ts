@@ -39,7 +39,7 @@ export function signin(req: express.Request , res: express.Response){
 
         // throw err
 
-        const token = jwt.sign({id: userObject._id} , jwtSecretKey , {expiresIn: 604800})
+        const token = jwt.sign(userObject , jwtSecretKey , {expiresIn: 604800})
 
         try{
             const verified = jwt.verify(token , jwtSecretKey)

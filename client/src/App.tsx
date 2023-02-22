@@ -18,9 +18,7 @@ function App() {
   const getData = () => {
     axios.get("http://localhost:8000/todo")
     .then(res => {
-      console.log(res)
       setTodo(res.data.todo)
-      console.log(todo)
     })
     .catch(err => {
       console.log(err)
@@ -204,7 +202,7 @@ function App() {
         }
       </div>
 
-      {/* <Signin /> */}
+      <Signin />
 
     </div>
   )
