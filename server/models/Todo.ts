@@ -21,6 +21,10 @@ const todoSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref :"User",
         required: true
+    },
+    deadline:{
+        type: Date,
+         required: true
     }
 } , {timestamps: true})
 

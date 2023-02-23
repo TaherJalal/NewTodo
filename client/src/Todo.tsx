@@ -10,17 +10,21 @@ function Todo(props:any) {
   const [description , setDescription] = useState('')
   const [archive , setArchive] = useState<any>(false)
   const [classname , setClass] = useState<any>("")
+  const [deadline , setDeadline] = useState<any>()
+  const [userId , setUserId] = useState<any>("")
   
 
   useEffect(() => {
    getData()
    console.log(todo)
    console.log(props.userId)
+   setUserId(props.userId)
   },[props.userId])
 
   const getData = () => {
     axios.get(`http://localhost:8000/todo?_id=${props.userId}`)
     .then(res => {
+        console.log(props.userId)
         console.log(res.data)
         console.log(res.data.data)
 
@@ -33,9 +37,11 @@ function Todo(props:any) {
 
   const postData = () => {
     axios.post('http://localhost:8000/todo' , {
+      createdBy: userId,
       task,
       description,
-      archive
+      archive,
+      deadline
     })
   }
 
@@ -116,6 +122,14 @@ function Todo(props:any) {
           <input type="text" name="description" onChange={(e) => setDescription(e.target.value)}/>
         </div>
 
+        
+        <div>
+          <label>Deadline:</label>
+          <input type="datetime-local" name="deadline" onChange={(e) => setDeadline(e.target.value)}/>
+        </div>
+
+
+
 
         <button onClick={() => postData()}>Add Task</button>
 
@@ -151,8 +165,8 @@ function Todo(props:any) {
 
 
         <div>
-            <h3>Created At:</h3>
-            <p>{data.createdAt}</p>
+            <h3>Deadline:</h3>
+            <p>{data.deadline}</p>
         </div>
 
            
@@ -184,6 +198,11 @@ function Todo(props:any) {
         <div>
             <h3>Status:</h3>
             <p>{data.status.toString()}</p>
+        </div>
+
+        <div>
+            <h3>Deadline:</h3>
+            <p>{data.deadline}</p>
         </div>
 
          

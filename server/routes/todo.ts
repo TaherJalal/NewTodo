@@ -3,7 +3,7 @@ import * as todoCntrl from '../controller/todo';
 
 const router = express.Router()
 
-// router.get('/' , todoCntrl.todo_get)
+
 router.get('/' , todoCntrl.onlyUserGet)
  router.post('/' , todoCntrl.todo_post)
  router.put('/' , todoCntrl.todo_edit)
