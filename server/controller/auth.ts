@@ -22,9 +22,9 @@ export function signup(req: express.Request , res: express.Response){
 }
 
 export function signin(req: express.Request , res: express.Response){
-    User.findOne(req.body.email)
+    console.log(req.body.email)
+    User.findOne({emailAddress:req.body.email})
     .then(data => {
-        console.log(data)
 
         const userObject = data?.toObject()
 
@@ -45,7 +45,7 @@ export function signin(req: express.Request , res: express.Response){
             const verified = jwt.verify(token , jwtSecretKey)
 
             verified ? res.json({token}) : res.json({message: "Unverified"})
-            console.log(token)
+            
         }
         
        catch(err){

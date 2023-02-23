@@ -3,15 +3,6 @@ import {Todo} from '../models/Todo'
 import {User} from '../models/User'
 
 
-export function todo_get(req: express.Request ,res: express.Response){
-    Todo.find().sort({createdAt : "asc"})
-    .then(todo => {
-        res.json({todo})
-    })
-    .catch(err => {
-        console.log(err)
-    })
-}
 
 export function onlyUserGet(req: express.Request , res: express.Response){
     Todo.find({createdBy: req.query._id})
