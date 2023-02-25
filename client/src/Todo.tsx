@@ -7,11 +7,14 @@ function Todo(props:any) {
 
     const [todo , setTodo] = useState<any>([])
   const [task , setTask] = useState('')
-  const [description , setDescription] = useState('')
+  const [description , setDescription] = useState<any>('')
   const [archive , setArchive] = useState<any>(false)
   const [classname , setClass] = useState<any>("")
   const [deadline , setDeadline] = useState<any>()
   const [userId , setUserId] = useState<any>("")
+  const [showEditFrom , setShowEditForm] = useState<any>(false)
+  const [newDes , setNewDesc] = useState<any>()
+  
   
 
   useEffect(() => {
@@ -62,6 +65,7 @@ function Todo(props:any) {
       archived: false
       })
       .then((res) => {
+        showEditFrom(false)
         console.log(res)
       })
       .catch(err => {
@@ -104,11 +108,29 @@ function Todo(props:any) {
         console.log(err)
       })
   }
+
+
+  const edit = (todoId:string) => {
+    axios.put('http://localhost:8000/todo?_id=${todoId}' , {
+        description: newDes
+    })
+    .then((res) => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+  }
+
+  const showForm = () => {
+    setShowEditForm(true)
+  }
+
   return (
     <div>
     <h1>Todo App</h1>
 
-    <div>
+    <div className='add'>
       <h3>Add Task</h3>
       <form action="">
 
@@ -174,6 +196,21 @@ function Todo(props:any) {
         <button onClick={() => archived(data._id)}>Archive</button>
         <button onClick={() => finishedTask(data._id)}>Done</button>
         <button onClick={() => deleteTodo(data._id)}>Delete</button>
+        <button type="button" onClick={showForm}>Edit Description</button>
+
+        {showEditFrom == true ? (
+            <form action="">
+                <div>
+                    <label>Description:</label>
+                    <input type="text" defaultValue={data.description} onChange={(e) => setNewDesc(e.target.value)}/>
+                </div>
+                <button onClick={() => edit(data._id)}>Send</button>
+            </form>
+        ):
+        (
+            <h1></h1>
+        )}
+
 
         
         </div>

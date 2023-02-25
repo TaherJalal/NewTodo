@@ -38,3 +38,11 @@
   gap: 0.5vw;
   
 }
+
+.add div{
+  padding: 1vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+  width: 13vw;
+}
